@@ -1,0 +1,38 @@
+export const CATPPUCCIN_COLORS = {
+  latte: {
+    base: "#eff1f5",
+    mantle: "#e6e9ef",
+    crust: "#dce0e8",
+    surface0: "#ccd0da",
+    surface1: "#bcc0cc",
+    text: "#4c4f69",
+    subtext0: "#6c6f85",
+    blue: "#1e66f5", // <== This was missing
+    mauve: "#8839ef",
+    red: "#d20f39",
+    green: "#40a02b",
+    yellow: "#df8e1d",
+    peach: "#fe640b",
+    teal: "#179299",
+    sky: "#04a5e5",
+    lavender: "#7287fd",
+  },
+  mocha: {
+    base: "#1e1e2e",
+    mantle: "#181825",
+    crust: "#11111b",
+    surface0: "#313244",
+    surface1: "#45475a",
+    text: "#cdd6f4",
+    subtext0: "#a6adc8",
+    blue: "#89b4fa", // <== This was missing
+    mauve: "#cba6f7",
+    red: "#f38ba8",
+    green: "#a6e3a1",
+    yellow: "#f9e2af",
+    peach: "#fab387",
+    teal: "#94e2d5",
+    sky: "#89dceb",
+    lavender: "#b4befe",
+  },
+};

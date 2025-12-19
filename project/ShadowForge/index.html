@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShadePress</title>
+
+  <!-- 1: Relative Path for CSS -->
+  <link rel="stylesheet" href="./shade/css/styles.css">
+  <link id="prism-latte-theme" rel="stylesheet" href="https://prismjs.catppuccin.com/latte.css" />
+  <link id="prism-mocha-theme" rel="stylesheet" href="https://prismjs.catppuccin.com/mocha.css" />
+
+  <!-- 2: Relative Paths in Import Map -->
+  <script type="importmap">
+    {
+        "imports": {
+            "marked": "https://esm.sh/marked@9.1.2",
+            "minisearch": "https://esm.sh/minisearch@6.1.0",
+            "shade/": "./shade/modules/"
+        }
+    }
+    </script>
+
+  <script>window.Prism = {manual: true};</script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+  <!-- 3: Relative Path for Main Script -->
+  <script type="module" src="./shade/main.js" defer></script>
+</head>
+
+<body>
+  <div id="app">
+    <header class="sp-header">
+      <button id="menu-toggle" aria-label="Toggle Menu"><svg class="sp-icon" viewBox="0 0 24 24">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg></button>
+      <div class="sp-logo" id="sp-logo">ShadePress</div>
+      <div class="search-trigger-wrapper">
+        <button id="search-btn" class="search-btn">
+          <svg class="sp-icon" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <span class="search-placeholder">Search...</span>
+          <span class="search-key">Ctrl K</span>
+        </button>
+      </div>
+      <nav class="sp-nav" id="sp-nav"></nav>
+      <button id="theme-toggle" aria-label="Toggle Theme"><svg class="sp-icon" viewBox="0 0 24 24">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg></button>
+    </header>
+    <div class="sp-layout">
+      <div id="backdrop" class="sp-backdrop"></div>
+      <aside class="sp-sidebar" id="sp-sidebar"></aside>
+      <main class="sp-content">
+        <article id="markdown-body" class="markdown-body">
+          <div class="loading">Loading...</div>
+        </article>
+        <nav id="pagination" class="sp-pagination"></nav>
+      </main>
+      <aside class="sp-toc" id="sp-toc"></aside>
+    </div>
+    <!-- Search Modal -->
+    <div id="search-modal" class="search-modal-backdrop">
+      <div class="search-modal-content">
+        <div class="search-header"><input type="text" id="search-input" placeholder="Search..."
+            autocomplete="off"><button id="close-search">Esc</button></div>
+        <div id="search-results" class="search-results">
+          <div class="search-empty">No results found.</div>
+        </div>
+        <div class="search-footer"><span>Powered by ShadePress</span></div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

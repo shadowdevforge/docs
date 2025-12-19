@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShadowForge | FOSS Hub</title>
+
+  <!-- Icons (CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+  <style>
+    /* 
+         * --------------------------------------------------------------------------
+         *  THEME ENGINE: Catppuccin (Mocha & Latte)
+         * --------------------------------------------------------------------------
+         */
+    :root {
+      /* Default: Latte (Light) */
+      --ctp-base: #eff1f5;
+      --ctp-mantle: #e6e9ef;
+      --ctp-surface0: #ccd0da;
+      --ctp-surface1: #bcc0cc;
+      --ctp-text: #4c4f69;
+      --ctp-subtext0: #6c6f85;
+      --ctp-blue: #1e66f5;
+      --ctp-mauve: #8839ef;
+      --ctp-red: #d20f39;
+      --ctp-green: #40a02b;
+      --ctp-yellow: #df8e1d;
+      --ctp-peach: #fe640b;
+      --ctp-teal: #179299;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+    }
+
+    html[data-theme="dark"] {
+      /* Mocha (Dark) */
+      --ctp-base: #1e1e2e;
+      --ctp-mantle: #181825;
+      --ctp-surface0: #313244;
+      --ctp-surface1: #45475a;
+      --ctp-text: #cdd6f4;
+      --ctp-subtext0: #a6adc8;
+      --ctp-blue: #89b4fa;
+      --ctp-mauve: #cba6f7;
+      --ctp-red: #f38ba8;
+      --ctp-green: #a6e3a1;
+      --ctp-yellow: #f9e2af;
+      --ctp-peach: #fab387;
+      --ctp-teal: #94e2d5;
+      --shadow-color: rgba(0, 0, 0, 0.3);
+    }
+
+    /* Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--ctp-base);
+      color: var(--ctp-text);
+      transition: background 0.3s, color 0.3s;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Layout */
+    .container {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Header / Theme Toggle */
+    header {
+      padding: 1.5rem 0;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--ctp-subtext0);
+      font-size: 1.5rem;
+      padding: 0.5rem;
+      border-radius: 50%;
+      transition: all 0.2s;
+    }
+
+    .icon-btn:hover {
+      background-color: var(--ctp-surface0);
+      color: var(--ctp-blue);
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 4rem 0 3rem;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 1rem;
+      background: linear-gradient(120deg, var(--ctp-blue), var(--ctp-mauve));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--ctp-subtext0);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Search Bar */
+    .search-wrapper {
+      max-width: 500px;
+      margin: 0 auto 4rem;
+      position: relative;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--ctp-subtext0);
+      font-size: 1.2rem;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 1rem 1rem 1rem 3rem;
+      font-size: 1rem;
+      background: var(--ctp-mantle);
+      border: 2px solid var(--ctp-surface0);
+      color: var(--ctp-text);
+      border-radius: 12px;
+      outline: none;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px var(--shadow-color);
+    }
+
+    .search-input:focus {
+      border-color: var(--ctp-blue);
+      transform: translateY(-2px);
+    }
+
+    /* Grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+
+    /* Card Component */
+    .card {
+      background: var(--ctp-mantle);
+      border: 1px solid var(--ctp-surface0);
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: var(--ctp-blue);
+      box-shadow: 0 10px 20px var(--shadow-color);
+    }
+
+    /* Card Color Stripe */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 4px;
+      background-color: var(--card-color);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.8rem;
+    }
+
+    .card-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.2rem 0.6rem;
+      border-radius: 50px;
+      background-color: var(--ctp-surface0);
+      color: var(--ctp-subtext0);
+    }
+
+    .card h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--ctp-text);
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: var(--ctp-subtext0);
+      flex-grow: 1;
+      /* Pushes footer down */
+      margin-bottom: 1.5rem;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--card-color);
+      gap: 0.5rem;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 3rem 0;
+      border-top: 1px solid var(--ctp-surface0);
+    }
+
+    .footer-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--ctp-subtext0);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .footer-link:hover {
+      background: var(--ctp-surface0);
+      color: var(--ctp-text);
+    }
+
+    /* Empty State */
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3rem;
+      color: var(--ctp-subtext0);
+      font-size: 1.2rem;
+    }
+
+    /* Mobile tweaks */
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .container {
+        padding: 0 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <button id="themeToggle" class="icon-btn" title="Toggle Theme">
+        <i class="ri-moon-line"></i>
+      </button>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <h1>ShadowForge</h1>
+      <p>The FOSS laboratory of ShadowDev. <br>Open source tools for the modern web.</p>
+    </section>
+
+    <!-- Search -->
+    <div class="search-wrapper">
+      <i class="ri-search-line search-icon"></i>
+      <input type="text" id="searchInput" class="search-input" placeholder="Search projects, categories...">
+    </div>
+
+    <!-- Projects Grid -->
+    <div id="grid" class="projects-grid">
+      <!-- Injected via JS -->
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <a href="https://github.com/shadowdevforge" target="_blank" class="footer-link">
+      <i class="ri-github-fill"></i> Star on GitHub
+    </a>
+    <a href="mailto:contact@shadowforge.dev" class="footer-link">
+      <i class="ri-mail-line"></i> Contact
+    </a>
+  </footer>
+
+  <script>
+    /**
+     * --------------------------------------------------------------------------
+     *  DATA CONFIGURATION
+     *  Edit this JSON array to add/remove projects.
+     *  Colors: blue, mauve, red, green, yellow, peach, teal
+     * --------------------------------------------------------------------------
+     */
+    const PROJECTS = [
+      {
+        "title": "ShadowForge.nvim",
+        "description": "The Ultimate Neovim Experience",
+        "link": "./project/ShadowForge",
+        "category": "Neovim Distro",
+        "color": "green"
+      },
+    ];
+
+    /**
+     * --------------------------------------------------------------------------
+     *  APPLICATION LOGIC
+     * --------------------------------------------------------------------------
+     */
+    const App = {
+      state: {
+        theme: localStorage.getItem('shadowforge_theme') || 'dark',
+        search: ''
+      },
+
+      init() {
+        this.cacheDOM();
+        this.applyTheme();
+        this.render();
+        this.bindEvents();
+      },
+
+      cacheDOM() {
+        this.grid = document.getElementById('grid');
+        this.search = document.getElementById('searchInput');
+        this.themeBtn = document.getElementById('themeToggle');
+        this.icon = this.themeBtn.querySelector('i');
+      },
+
+      bindEvents() {
+        this.themeBtn.addEventListener('click', () => this.toggleTheme());
+        this.search.addEventListener('input', (e) => {
+          this.state.search = e.target.value.toLowerCase();
+          this.render();
+        });
+      },
+
+      toggleTheme() {
+        this.state.theme = this.state.theme === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('shadowforge_theme', this.state.theme);
+        this.applyTheme();
+      },
+
+      applyTheme() {
+        document.documentElement.setAttribute('data-theme', this.state.theme);
+        this.icon.className = this.state.theme === 'dark' ? 'ri-moon-line' : 'ri-sun-line';
+      },
+
+      filterProjects() {
+        if (!this.state.search) return PROJECTS;
+        return PROJECTS.filter(p =>
+          p.title.toLowerCase().includes(this.state.search) ||
+          p.description.toLowerCase().includes(this.state.search) ||
+          p.category.toLowerCase().includes(this.state.search)
+        );
+      },
+
+      render() {
+        const filtered = this.filterProjects();
+
+        if (filtered.length === 0) {
+          this.grid.innerHTML = `
+                        <div class="no-results">
+                            <i class="ri-ghost-line" style="font-size: 2rem; margin-bottom: 1rem; display:block;"></i>
+                            No projects found matching "${this.state.search}"
+                        </div>
+                    `;
+          return;
+        }
+
+        this.grid.innerHTML = filtered.map(p => `
+                    <a href="${p.link}" class="card" style="--card-color: var(--ctp-${p.color})">
+                        <div class="card-header">
+                            <span class="card-badge">${p.category}</span>
+                        </div>
+                        <h3>${p.title}</h3>
+                        <p>${p.description}</p>
+                        <div class="card-footer">
+                            View Project <i class="ri-arrow-right-line"></i>
+                        </div>
+                    </a>
+                `).join('');
+      }
+    };
+
+    // Initialize on Load
+    document.addEventListener('DOMContentLoaded', () => App.init());
+  </script>
+</body>
+
+</html>
